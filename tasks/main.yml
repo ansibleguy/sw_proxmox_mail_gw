@@ -1,5 +1,17 @@
 ---
 
-- name: ROLE | Processing debian config
+- name: Proxmox Mail GW | Checking config
+  ansible.builtin.assert:
+    that:
+      - pmg is defined
+      - pmg.fqdn | valid_hostname
+
+- name: Proxmox Mail GW | Checking environment
+  ansible.builtin.assert:
+    that:
+      - "ansible_virtualization_role is undefined or ansible_virtualization_role != 'guest' or 'docker' not in ansible_virtualization_tech_guest"
+  when: not testing
+
+- name: Proxmox Mail GW | Processing debian config
   ansible.builtin.import_tasks: debian/main.yml
   when: "ansible_distribution|lower in ['debian', 'ubuntu']"

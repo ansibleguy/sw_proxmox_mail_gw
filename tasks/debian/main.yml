@@ -1,7 +1,110 @@
 ---
 
-- name: ROLE | Debian | Task
-  ansible.builtin.apt:
-    pkg: "{{ something }}"
+- name: Proxmox Mail GW | Debian | Setting hostname
+  ansible.builtin.hostname:
+    name: "{{ PMG_CONFIG.fqdn }}"
+  register: pmg_hostname
+  when: not testing  # docker limitation
+
+- name: Proxmox Mail GW | Debian | Set localhost name resolution
+  ansible.builtin.lineinfile:
+    dest: '/etc/hosts'
+    regexp: '^127.0.1.1'
+    line: "127.0.1.1 {{ PMG_CONFIG.fqdn }}
+    {% if PMG_CONFIG.fqdn | get_subdomain != inventory_hostname %}{{ PMG_CONFIG.fqdn | get_subdomain }} {% endif %}\
+    {{ inventory_hostname }} localhost"
     state: present
-  tags: [base]
+  register: pmg_hosts
+  when: not testing  # docker limitation
+
+- name: Proxmox Mail GW | Debian | Ask user
+  ansible.builtin.pause:
+    prompt: "You need to reboot the system to fully update the hostname - can we do this NOW? [yes/NO]"
+  register: pmg_prompt_reboot1
+  when:
+    - not testing
+    - not no_prompts
+    - pmg_hostname.changed or pmg_hosts.changed
+
+- name: Proxmox Mail GW | Debian | Rebooting the system
+  ansible.builtin.reboot:
+    reboot_timeout: 60
+  when:
+    - not testing
+    - pmg_hostname.changed or pmg_hosts.changed
+    - pmg_prompt_reboot1.user_input in ['y', 'Y', 'YES', 'yes'] or no_prompts
+  changed_when: false
+
+- name: Proxmox Mail GW | Debian | Installing dependencies
+  ansible.builtin.apt:
+    name: "{{ PMG_HC.packages.base }}"
+    update_cache: yes
+    state: present
+
+- name: Proxmox Mail GW | Debian | Starting/Enabling Postfix service
+  ansible.builtin.systemd:
+    name: "{{ PMG_HC.svc.pf }}"
+    enabled: yes
+    state: started
+
+- name: Proxmox Mail GW | Debian | Managing database
+  ansible.builtin.import_tasks: database.yml
+  when: PMG_CONFIG.manage.database
+
+- name: Proxmox Mail GW | Debian | Configuring Nginx webserver
+  ansible.builtin.include_role:
+    name: ansibleguy.infra_nginx
+  vars:
+    nginx:
+      sites:
+        proxmox_mail_gateway: "{{ defaults_pmg_nginx | combine(PMG_CONFIG.nginx, recursive=true) }}"
+  when: PMG_CONFIG.manage.webserver
+  tags: webserver
+
+- name: Proxmox Mail GW | Debian | Adding repository-key
+  ansible.builtin.apt_key:
+    url: "{{ PMG_HC.repo.key }}"
+
+- name: Proxmox Mail GW | Debian | Adding package repository
+  ansible.builtin.apt_repository:
+    repo: "{{ PMG_HC.repo.no_sub }}"
+    state: present
+    update_cache: yes
+    filename: 'proxmox_mail_gateway'
+
+- name: Proxmox Mail GW | Debian | Installing Proxmox Mail Gateway
+  ansible.builtin.apt:
+    name: "{{ PMG_HC.packages.main }}"
+    state: present
+  register: pmg_install
+  when: >
+    ansible_virtualization_role is undefined or
+    ansible_virtualization_role != 'guest' or
+    'docker' not in ansible_virtualization_tech_guest
+  # docker-check for testing-purposes
+
+- name: Proxmox Mail GW | Debian | Removing enterprise repo
+  ansible.builtin.file:
+    state: absent
+    path: '/etc/apt/sources.list.d/pmg-enterprise.list'
+  when: not PMG_CONFIG.subscription
+
+- name: Proxmox Mail GW | Debian | Removing community repo
+  ansible.builtin.file:
+    state: absent
+    path: '/etc/apt/sources.list.d/proxmox_mail_gateway.list'
+  when: PMG_CONFIG.subscription
+
+- name: Proxmox Mail GW | Debian | Ask user
+  ansible.builtin.pause:
+    prompt: "The system needs to be rebooted after finishing the installation - can we do this NOW? [yes/NO]"
+  register: pmg_prompt_reboot2
+  when: pmg_install.changed and not no_prompts
+
+- name: Proxmox Mail GW | Debian | Rebooting the system
+  ansible.builtin.reboot:
+    reboot_timeout: 60
+  when:
+    - pmg_install.changed
+    - "pmg_prompt_reboot2.user_input in ['y', 'Y', 'YES', 'yes'] or no_prompts"
+  changed_when: false

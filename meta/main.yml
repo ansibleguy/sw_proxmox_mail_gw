@@ -4,13 +4,22 @@ galaxy_info:
   author: 'AnsibleGuy <guy@ansibleguy.net>'
   namespace: 'ansibleguy'
   license: 'GPLv3'
-  issue_tracker_url: 'https://github.com/ansibleguy/ROLE/issues'
+  issue_tracker_url: 'https://github.com/ansibleguy/sw_proxmox_mail_gw/issues'
   min_ansible_version: 2.9.0
-  description: ''
+  description: 'Ansible role to deploy Proxmox Mail Gateway on a linux server'
   platforms:
     - name: Debian
       versions:
         - bullseye
-  galaxy_tags: []
+  galaxy_tags:
+    - 'proxmox'
+    - 'mail'
+    - 'mailing'
+    - 'security'
+    - 'filtering'
+    - 'filter'
+    - 'antispam'
+    - 'spam'
+    - 'phishing'
 
 collections: []

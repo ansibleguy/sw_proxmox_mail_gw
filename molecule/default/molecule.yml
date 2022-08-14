@@ -1,5 +1,7 @@
 ---
 
+# todo: full testing using VMs => docker isn't working
+
 references:
   docker:
     all: &docker_all
@@ -19,22 +21,33 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: test-ag-ROLE-tester-${USER}
+  - name: test-ag-pmg-1-${USER}
     docker_networks:
-      - name: 'test-ag-ROLE-${USER}'
+      - name: 'test-ag-pmg-${USER}'
         ipam_config:
-          - subnet: '192.168.N.0/24'
-            gateway: '192.168.N.254'
+          - subnet: '192.168.7.0/24'
+            gateway: '192.168.7.254'
     networks:
-      - name: 'test-ag-ROLE-${USER}'
-        ipv4_address: '192.168.N.1'
-    groups: [grp_tester]
+      - name: 'test-ag-pmg-${USER}'
+        ipv4_address: '192.168.7.2'
+    groups: [grp_targets]
     <<: *docker_all
 
-  - name: test-ag-ROLE-1-${USER}
+  #  - name: test-ag-pmg-tester-${USER}
+  #    networks:
+  #      - name: 'test-ag-pmg-${USER}'
+  #        ipv4_address: '192.168.7.1'
+  #    etc_hosts: {
+  #      pmg1.test.ansibleguy.net: '192.168.7.2',
+  #      pmg2.test.ansibleguy.net: '192.168.7.3',
+  #    }
+  #    groups: [grp_tester]
+  #    <<: *docker_all
+
+  - name: test-ag-pmg-2-${USER}
     networks:
-      - name: 'test-ag-ROLE-${USER}'
-        ipv4_address: '192.168.N.2'
+      - name: 'test-ag-pmg-${USER}'
+        ipv4_address: '192.168.7.3'
     groups: [grp_targets]
     <<: *docker_all
 

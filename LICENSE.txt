@@ -621,7 +621,7 @@ copy of the Program in return for a fee.
                      END OF TERMS AND CONDITIONS
 
 
-    Ansible Role to deploy SOMETHING.
+    Ansible Role to deploy Proxmox Mail Gateway on a linux server.
     Copyright (C) 2022 AnsibleGuy
 
     This program is free software: you can redistribute it and/or modify

@@ -1,0 +1,12 @@
+---
+
+- name: Proxmox Mail GW | Debian | Database | Installing
+  ansible.builtin.apt:
+    name: "{{ PMG_HC.packages.db }}"
+    state: present
+
+- name: Proxmox Mail GW | Debian | Database | Starting/Enabling service
+  ansible.builtin.systemd:
+    name: "{{ PMG_HC.svc.db }}"
+    enabled: yes
+    state: started

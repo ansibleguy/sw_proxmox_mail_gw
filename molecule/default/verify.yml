@@ -1,13 +1,95 @@
 ---
 
-- name: Verify
-  hosts: grp_tester
+#   not yet working => need to switch to testing with VMs
+#  - name: Verify
+#    hosts: grp_tester
+#    gather_facts: false
+#    tasks:
+#    - name: Checking if web-service is reachable
+#      ansible.builtin.uri:
+#        url:
+#        return_content: yes
+#        validate_certs: false
+#      register: page
+#      failed_when: "'Proxmox Mail Gateway' not in page.content"
+#      loop:
+#        - 'https://pmg1.test.ansibleguy.net'
+#        - 'https://pmg2.test.ansibleguy.net:8006'
+
+- name: Verify - default
+  hosts: test-ag-pmg-1-{{ lookup('ansible.builtin.env', 'USER') }}
   gather_facts: false
-  tasks: []
-  #  - name: Checking if zoneminder web-service is reachable
-  #    ansible.builtin.uri:
-  #      url: 'https://192.168.0.2'
-  #      return_content: yes
-  #      validate_certs: false
-  #    register: page
-  #    failed_when: "'Zoneminder' not in page.content"
+  tasks:
+    - name: Checking that services are running and enabled
+      ansible.builtin.systemd:
+        name: "{{ item }}"
+        enabled: true
+        state: started
+      check_mode: true
+      register: svc_test
+      loop:
+        - 'nginx.service'
+        # - 'pmgproxy.service'
+        - 'postfix@-.service'
+        - 'postgresql.service'
+      failed_when: svc_test.changed
+
+    - name: Checking that services survive restart
+      ansible.builtin.systemd:
+        name: "{{ item }}"
+        state: restarted
+      loop:
+        - 'nginx.service'
+        # - 'pmgproxy.service'
+        - 'postfix@-.service'
+        - 'postgresql.service'
+
+    - name: Checking ports
+      ansible.builtin.wait_for:
+        port: "{{ item }}"
+        timeout: 1
+        msg: "Checking port {{ item }}"
+      loop:
+        - 80  # web
+        - 443
+        - 25  # mailing
+        # - 465
+        #  - 587
+        # - 8006  # web-mgmt
+
+- name: Verify - no nginx
+  hosts: test-ag-pmg-2-{{ lookup('ansible.builtin.env', 'USER') }}
+  gather_facts: false
+  tasks:
+    - name: Checking that services are running and enabled
+      ansible.builtin.systemd:
+        name: "{{ item }}"
+        enabled: true
+        state: started
+      check_mode: true
+      register: svc_test
+      loop:
+        # - 'pmgproxy.service'
+        - 'postfix@-.service'
+        - 'postgresql.service'
+      failed_when: svc_test.changed
+
+    - name: Checking that services survive restart
+      ansible.builtin.systemd:
+        name: "{{ item }}"
+        state: restarted
+      loop:
+        # - 'pmgproxy.service'
+        - 'postfix@-.service'
+        - 'postgresql.service'
+
+    - name: Checking ports
+      ansible.builtin.wait_for:
+        port: "{{ item }}"
+        timeout: 1
+        msg: "Checking port {{ item }}"
+      loop:
+        # - 465
+        #  - 587
+        # - 8006  # web-mgmt
+        - 25  # mailing

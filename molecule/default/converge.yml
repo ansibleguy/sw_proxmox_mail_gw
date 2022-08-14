@@ -1,8 +1,33 @@
 ---
 
-- name: Converge
-  hosts: grp_targets
-  #  vars:
+- name: Converge - default
+  hosts: test-ag-pmg-1-{{ lookup('ansible.builtin.env', 'USER') }}
+  vars:
+    no_prompts: true
+    testing: true
+    pmg:
+      fqdn: 'pmg1.test.ansibleguy.net'
+
+      nginx:
+        aliases: ['alias.lan', '_']
+        ip: '192.168.7.2'
+        ssl:
+          mode: 'ca'
 
   roles:
-    - ansibleguy.ROLE
+    - ansibleguy.sw_proxmox_mail_gw
+
+- name: Converge - no nginx
+  hosts: test-ag-pmg-2-{{ lookup('ansible.builtin.env', 'USER') }}
+  vars:
+    no_prompts: true
+    testing: true
+    subscription: true
+    pmg:
+      fqdn: 'pmg2.test.ansibleguy.net'
+
+      manage:
+        webserver: false
+
+  roles:
+    - ansibleguy.sw_proxmox_mail_gw

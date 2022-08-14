@@ -6,4 +6,4 @@
   become: true
   gather_facts: yes
   roles:
-  - ansibleguy.ROLE
+  - ansibleguy.sw_proxmox_mail_gw

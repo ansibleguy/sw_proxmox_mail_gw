@@ -1,16 +1,17 @@
-[![LOGOTEXT](URL-to-LOGO)](COMPANY-WEB)
+[![Proxmox Logo](https://www.proxmox.com/images/proxmox/Proxmox_logo_standard_hex_400px.png)](https://www.proxmox.com/en/proxmox-mail-gateway)
 
-# Ansible Role - SOMETHING
+# Ansible Role - Proxmox Mail Gateway
 
-Role to deploy SOMETHING
+Role to deploy [Proxmox Mail Gateway](https://www.proxmox.com/en/proxmox-mail-gateway) on a linux server.
 
-# REPLACE: GALAXY_ID & ROLE
+[![Proxmox Incoming Processing](https://dl.ansibleguy.net/sw_proxmox_mail_gw/flow.png)](https://pmg.proxmox.com/pmg-docs/pmg-admin-guide.html)
 
-[![Molecule Test Status](https://badges.ansibleguy.net/ROLE.molecule.svg)](https://molecule.readthedocs.io/en/latest/)
-[![YamlLint Test Status](https://badges.ansibleguy.net/ROLE.yamllint.svg)](https://yamllint.readthedocs.io/en/stable/)
-[![Ansible-Lint Test Status](https://badges.ansibleguy.net/ROLE.ansiblelint.svg)](https://ansible-lint.readthedocs.io/en/latest/)
-[![Ansible Galaxy](https://img.shields.io/ansible/role/GALAXY_ID)](https://galaxy.ansible.com/ansibleguy/ROLE)
-[![Ansible Galaxy Downloads](https://img.shields.io/badge/dynamic/json?color=blueviolet&label=Galaxy%20Downloads&query=%24.download_count&url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2FGALAXY_ID%2F%3Fformat%3Djson)](https://galaxy.ansible.com/ansibleguy/ROLE)
+
+[![Molecule Test Status](https://badges.ansibleguy.net/sw_proxmox_mail_gw.molecule.svg)](https://molecule.readthedocs.io/en/latest/)
+[![YamlLint Test Status](https://badges.ansibleguy.net/sw_proxmox_mail_gw.yamllint.svg)](https://yamllint.readthedocs.io/en/stable/)
+[![Ansible-Lint Test Status](https://badges.ansibleguy.net/sw_proxmox_mail_gw.ansiblelint.svg)](https://ansible-lint.readthedocs.io/en/latest/)
+[![Ansible Galaxy](https://img.shields.io/ansible/role/60005)](https://galaxy.ansible.com/ansibleguy/sw_proxmox_mail_gw)
+[![Ansible Galaxy Downloads](https://img.shields.io/badge/dynamic/json?color=blueviolet&label=Galaxy%20Downloads&query=%24.download_count&url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2F60005%2F%3Fformat%3Djson)](https://galaxy.ansible.com/ansibleguy/sw_proxmox_mail_gw)
 
 
 **Tested:**
@@ -18,24 +19,24 @@ Role to deploy SOMETHING
 
 ## Functionality
 
+
 * **Package installation**
   * Ansible dependencies (_minimal_)
-
+  * Systemd
+  * Proxmox Mail Gateway
+  * PMG dependencies
+    * postgreSQL
+    * Postfix
+  
 
 * **Configuration**
-  * 
-
-
-  * **Default config**:
-    * 
- 
+  * default postgreSQL installation
 
   * **Default opt-ins**:
-    * 
-
+    * Nginx => using [THIS Role](https://github.com/ansibleguy/infra_nginx)
 
   * **Default opt-outs**:
-    * 
+    * Enterprise apt-repository (_[subscription needed](https://www.proxmox.com/en/proxmox-mail-gateway/pricing)_)
 
 
 ## Info
@@ -49,6 +50,22 @@ Role to deploy SOMETHING
 
 
 * **Warning:** Not every setting/variable you provide will be checked for validity. Bad config might break the role!
+
+
+* **Warning:** If you choose to install the nginx web server (_default_) and want to use the [built-in ACME certificate management](https://pmg.proxmox.com/pmg-docs/pmg-admin-guide.html#sysadmin_certificate_management) - you will have to configure 'nginx.plain_site' to 'false'.
+
+  As this 'ACME standalone integration' needs the port 80 to be not in use!
+
+
+* **Note:** Check out the [nice documentation](https://pmg.proxmox.com/pmg-docs/pmg-admin-guide.html#_features) provided by Proxmox!
+
+
+* **Warning:** Docker containers ARE NOT SUPPORTED.
+
+
+## Prerequisites
+
+See: [Prerequisites](https://github.com/ansibleguy/sw_proxmox_mail_gw/blob/stable/Prerequisites.md)
 
 
 ## Setup
@@ -65,10 +82,51 @@ ansible-galaxy install -r requirements.yml
 ### Config
 
 Define the config as needed:
-
 ```yaml
-app:
+pmg:
+  fqdn: 'pmg.template.ansibleguy.net'  # valid, public dns-hostname of your server
 
+  manage:
+    webserver: true  # set to false to disable nginx-component
+
+  nginx:  # configure the webserver settings => see: https://github.com/ansibleguy/infra_nginx
+    aliases: ['mail-gw.ansibleguy.net']  # additional domains to add to the certificate
+    ssl:
+      mode: 'letsencrypt'  # or selfsigned/ca
+      #  if you use 'selfsigned' or 'ca':
+      #    cert:
+      #      cn: 'Proxmox Mail Gateway'
+      #      org: 'AnsibleGuy'
+      #      email: 'pmg@template.ansibleguy.net'
+    letsencrypt:
+      email: 'pmg@template.ansibleguy.net'
+```
+
+Bare minimum example:
+```yaml
+pmg:
+  fqdn: 'pmg.template.ansibleguy.net'
+```
+
+Example to use PMG's built-in ACME:
+```yaml
+pmg:
+  fqdn: 'pmg.template.ansibleguy.net'
+
+  nginx:
+    aliases: ['mail-gw.ansibleguy.net']
+    plain_site: false  # nginx will not bind to port 80
+    letsencrypt:
+      email: 'pmg@template.ansibleguy.net'
+```
+
+Example - if you want to setup postgreSQL manually:
+```yaml
+pmg:
+  fqdn: 'pmg.template.ansibleguy.net'
+
+  manage:
+    database: false
 ```
 
 You might want to use 'ansible-vault' to encrypt your passwords:
@@ -82,10 +140,6 @@ Run the playbook:
 ```bash
 ansible-playbook -K -D -i inventory/hosts.yml playbook.yml
 ```
-
-There are also some useful **tags** available:
-* 
-*
 
 To debug errors - you can set the 'debug' variable at runtime:
 ```bash

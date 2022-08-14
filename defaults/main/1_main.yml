@@ -1,6 +1,22 @@
 ---
 
+no_prompts: false
+debug: false
+testing: false
+
 # default config => is overwritten by provided config
-defaults_pmg: {}
+defaults_pmg:
+  subscription: false
+  manage:
+    webserver: true
+    database: true
+
+  nginx:
+    proxy:
+      port: 8006
+      proto: 'https'
 
 PMG_CONFIG: "{{ defaults_pmg | combine(pmg, recursive=true) }}"
+
+defaults_pmg_nginx:
+  domain: "{{ PMG_CONFIG.fqdn }}"
