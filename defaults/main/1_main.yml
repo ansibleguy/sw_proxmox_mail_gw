@@ -1,0 +1,6 @@
+---
+
+# default config => is overwritten by provided config
+defaults_pmg: {}
+
+PMG_CONFIG: "{{ defaults_pmg | combine(pmg, recursive=true) }}"

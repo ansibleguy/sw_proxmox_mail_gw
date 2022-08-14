@@ -1,0 +1,5 @@
+---
+
+- name: ROLE | Processing debian config
+  ansible.builtin.import_tasks: debian/main.yml
+  when: "ansible_distribution|lower in ['debian', 'ubuntu']"

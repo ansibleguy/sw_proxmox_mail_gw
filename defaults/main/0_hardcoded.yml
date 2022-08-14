@@ -1,0 +1,7 @@
+---
+
+PMG_HC:
+  repo: 'deb http://download.proxmox.com/debian/pmg bullseye pmg-no-subscription'
+  repo_key: 'https://enterprise.proxmox.com/debian/proxmox-release-bullseye.gpg'
+
+

@@ -1,0 +1,8 @@
+---
+
+- name: Converge
+  hosts: grp_targets
+  #  vars:
+
+  roles:
+    - ansibleguy.ROLE

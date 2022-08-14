@@ -1,0 +1,16 @@
+---
+
+galaxy_info:
+  author: 'AnsibleGuy <guy@ansibleguy.net>'
+  namespace: 'ansibleguy'
+  license: 'GPLv3'
+  issue_tracker_url: 'https://github.com/ansibleguy/ROLE/issues'
+  min_ansible_version: 2.9.0
+  description: ''
+  platforms:
+    - name: Debian
+      versions:
+        - bullseye
+  galaxy_tags: []
+
+collections: []
