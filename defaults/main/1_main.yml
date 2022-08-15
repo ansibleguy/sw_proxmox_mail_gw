@@ -18,5 +18,5 @@ defaults_pmg:
 
 PMG_CONFIG: "{{ defaults_pmg | combine(pmg, recursive=true) }}"
 
-defaults_pmg_nginx:
+pmg_conditionals_nginx:
   domain: "{{ PMG_CONFIG.fqdn }}"

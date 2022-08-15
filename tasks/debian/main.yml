@@ -57,7 +57,7 @@
   vars:
     nginx:
       sites:
-        proxmox_mail_gateway: "{{ defaults_pmg_nginx | combine(PMG_CONFIG.nginx, recursive=true) }}"
+        proxmox_mail_gateway: "{{ pmg_conditionals_nginx | combine(PMG_CONFIG.nginx, recursive=true) }}"
   when: PMG_CONFIG.manage.webserver
   tags: webserver
 

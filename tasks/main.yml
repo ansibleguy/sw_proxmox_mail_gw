@@ -1,5 +1,19 @@
 ---
 
+- name: Proxmox Mail GW | Showing debug info - user provided config
+  ansible.builtin.debug:
+    var: pmg
+  when:
+    - debug is defined
+    - debug
+
+- name: Proxmox Mail GW | Showing debug info - running config
+  ansible.builtin.debug:
+    var: PMG_CONFIG
+  when:
+    - debug is defined
+    - debug
+
 - name: Proxmox Mail GW | Checking config
   ansible.builtin.assert:
     that:
