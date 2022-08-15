@@ -41,7 +41,9 @@ Role to deploy [Proxmox Mail Gateway](https://www.proxmox.com/en/proxmox-mail-ga
 
 ## Info
 
-* **Warning:** **IF YOU ARE USING A DEDICATED VM FOR THIS SETUP**: you should probably use the [ISO installation process](https://www.proxmox.com/en/downloads/category/proxmox-mail-gateway).
+* **Warning:** **IF YOU ARE USING A DEDICATED VM FOR THIS SETUP**:
+
+  You should probably use the [ISO installation process](https://www.proxmox.com/en/downloads/category/proxmox-mail-gateway).
 
   It might be better supported!
 
