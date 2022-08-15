@@ -70,6 +70,11 @@ Role to deploy [Proxmox Mail Gateway](https://www.proxmox.com/en/proxmox-mail-ga
 * **Warning:** Docker containers ARE NOT SUPPORTED.
 
 
+* **Info:** PMG's web interface default login is done via PAM/System users.
+
+  Normally, at first, via 'root'.
+
+
 ## Prerequisites
 
 See: [Prerequisites](https://github.com/ansibleguy/sw_proxmox_mail_gw/blob/stable/Prerequisites.md)
