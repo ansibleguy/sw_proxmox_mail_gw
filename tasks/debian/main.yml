@@ -4,7 +4,7 @@
   ansible.builtin.hostname:
     name: "{{ PMG_CONFIG.fqdn }}"
   register: pmg_hostname
-  when: not testing  # docker limitation
+  tags: molecule-notest  # docker limitation
 
 - name: Proxmox Mail GW | Debian | Set localhost name resolution
   ansible.builtin.lineinfile:
@@ -15,25 +15,25 @@
     {{ inventory_hostname }} localhost"
     state: present
   register: pmg_hosts
-  when: not testing  # docker limitation
+  tags: molecule-notest  # docker limitation
 
 - name: Proxmox Mail GW | Debian | Ask user
   ansible.builtin.pause:
     prompt: "You need to reboot the system to fully update the hostname - can we do this NOW? [yes/NO]"
   register: pmg_prompt_reboot1
   when:
-    - not testing
     - not no_prompts
     - pmg_hostname.changed or pmg_hosts.changed
+  tags: molecule-notest
 
 - name: Proxmox Mail GW | Debian | Rebooting the system
   ansible.builtin.reboot:
     reboot_timeout: 60
   when:
-    - not testing
     - pmg_hostname.changed or pmg_hosts.changed
     - pmg_prompt_reboot1.user_input in ['y', 'Y', 'YES', 'yes'] or no_prompts
   changed_when: false
+  tags: molecule-notest
 
 - name: Proxmox Mail GW | Debian | Installing dependencies
   ansible.builtin.apt:

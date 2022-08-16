@@ -2,7 +2,6 @@
 
 no_prompts: false
 debug: false
-testing: false
 
 # default config => is overwritten by provided config
 defaults_pmg:

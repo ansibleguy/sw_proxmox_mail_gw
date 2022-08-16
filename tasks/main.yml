@@ -24,7 +24,7 @@
   ansible.builtin.assert:
     that:
       - "ansible_virtualization_role is undefined or ansible_virtualization_role != 'guest' or 'docker' not in ansible_virtualization_tech_guest"
-  when: not testing
+  tags: molecule-notest
 
 - name: Proxmox Mail GW | Processing debian config
   ansible.builtin.import_tasks: debian/main.yml
