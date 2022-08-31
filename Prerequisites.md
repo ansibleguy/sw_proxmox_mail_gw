@@ -38,7 +38,7 @@ For the server to work, you must allow the following ports using your firewall:
 - to be continued..
 
 Optional:
-- LetsEncrypt: 443/tcp+udp to acme-v02.api.letsencrypt.org and staging-v02.api.letsencrypt.org
+- LetsEncrypt: 80/tcp, 443/tcp+udp to acme-v02.api.letsencrypt.org, staging-v02.api.letsencrypt.org (_debug mode_) and r3.o.lencr.org
 - CloudMark Razor: 2703/tcp to discovery.razor.cloudmark.com and CURRENTLY 208.83.137.0/24
 
 
