@@ -2,7 +2,7 @@
 
 # todo: full testing using VMs => docker isn't working
 
-references:
+_references:
   docker:
     all: &docker_all
       docker_host: 'tcp://molecule-docker.local:2375'
@@ -21,21 +21,21 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: test-ag-pmg-1-${USER}
+  - name: test-ag-pmg-1
     docker_networks:
-      - name: 'test-ag-pmg-${USER}'
+      - name: 'test-ag-pmg'
         ipam_config:
           - subnet: '192.168.7.0/24'
             gateway: '192.168.7.254'
     networks:
-      - name: 'test-ag-pmg-${USER}'
+      - name: 'test-ag-pmg'
         ipv4_address: '192.168.7.2'
     groups: [grp_targets]
     <<: *docker_all
 
-  #  - name: test-ag-pmg-tester-${USER}
+  #  - name: test-ag-pmg-tester
   #    networks:
-  #      - name: 'test-ag-pmg-${USER}'
+  #      - name: 'test-ag-pmg'
   #        ipv4_address: '192.168.7.1'
   #    etc_hosts: {
   #      pmg1.test.ansibleguy.net: '192.168.7.2',
@@ -44,9 +44,9 @@ platforms:
   #    groups: [grp_tester]
   #    <<: *docker_all
 
-  - name: test-ag-pmg-2-${USER}
+  - name: test-ag-pmg-2
     networks:
-      - name: 'test-ag-pmg-${USER}'
+      - name: 'test-ag-pmg'
         ipv4_address: '192.168.7.3'
     groups: [grp_targets]
     <<: *docker_all

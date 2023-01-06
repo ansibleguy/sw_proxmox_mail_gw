@@ -1,7 +1,7 @@
 ---
 
 - name: Converge - default
-  hosts: test-ag-pmg-1-{{ lookup('ansible.builtin.env', 'USER') }}
+  hosts: test-ag-pmg-1
   vars:
     no_prompts: true
     pmg:
@@ -17,7 +17,7 @@
     - ansibleguy.sw_proxmox_mail_gw
 
 - name: Converge - no nginx
-  hosts: test-ag-pmg-2-{{ lookup('ansible.builtin.env', 'USER') }}
+  hosts: test-ag-pmg-2
   vars:
     no_prompts: true
     subscription: true

@@ -17,7 +17,7 @@
 #        - 'https://pmg2.test.ansibleguy.net:8006'
 
 - name: Verify - default
-  hosts: test-ag-pmg-1-{{ lookup('ansible.builtin.env', 'USER') }}
+  hosts: test-ag-pmg-1
   gather_facts: false
   tasks:
     - name: Checking that services are running and enabled
@@ -58,7 +58,7 @@
         # - 8006  # web-mgmt
 
 - name: Verify - no nginx
-  hosts: test-ag-pmg-2-{{ lookup('ansible.builtin.env', 'USER') }}
+  hosts: test-ag-pmg-2
   gather_facts: false
   tasks:
     - name: Checking that services are running and enabled
