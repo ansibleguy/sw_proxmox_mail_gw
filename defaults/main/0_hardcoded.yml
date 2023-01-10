@@ -4,7 +4,7 @@ PMG_HC:
   repo:
     no_sub: "deb http://download.proxmox.com/debian/pmg {{ ansible_distribution | lower }} pmg-no-subscription"
     sub: "deb https://enterprise.proxmox.com/debian/pmg {{ ansible_distribution | lower }} pmg-enterprise"
-    key: "https://enterprise.proxmox.com/debian/proxmox-release-{{ ansible_distribution | lower }}.gpg"
+    key: "https://enterprise.proxmox.com/debian/proxmox-release-{{ ansible_distribution_release | lower }}.gpg"
   packages:
     base: ['gpg', 'systemd', 'postfix', 'iproute2']
     main: ['proxmox-mailgateway']
