@@ -17,6 +17,23 @@ Role to deploy [Proxmox Mail Gateway](https://www.proxmox.com/en/proxmox-mail-ga
 **Tested:**
 * Debian 11
 
+## Install
+
+```bash
+ansible-galaxy install ansibleguy.sw_proxmox_mail_gw
+
+# or to custom role-path
+ansible-galaxy install ansibleguy.sw_proxmox_mail_gw --roles-path ./roles
+
+# install dependencies
+ansible-galaxy install -r requirements.yml
+```
+
+## Prerequisites
+
+See: [Prerequisites](https://github.com/ansibleguy/sw_proxmox_mail_gw/blob/stable/Prerequisites.md)
+
+
 ## Functionality
 
 
@@ -73,20 +90,6 @@ Role to deploy [Proxmox Mail Gateway](https://www.proxmox.com/en/proxmox-mail-ga
 * **Info:** PMG's web interface default login is done via PAM/System users.
 
   Normally, at first, via 'root'.
-
-
-## Prerequisites
-
-See: [Prerequisites](https://github.com/ansibleguy/sw_proxmox_mail_gw/blob/stable/Prerequisites.md)
-
-
-## Setup
-
-For this role to work - you must install its dependencies first:
-
-```
-ansible-galaxy install -r requirements.yml
-```
 
 
 ## Usage
