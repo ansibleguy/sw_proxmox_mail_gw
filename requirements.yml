@@ -3,7 +3,7 @@
 # install: ansible-galaxy install -r requirements.yml
 
 collections:
-  - name: 'community.crypto'
+  - 'community.crypto'
 
 roles:
   - src: 'ansibleguy.infra_certs'
