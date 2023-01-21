@@ -19,10 +19,10 @@ class FilterModule(object):
             r'([a-zA-Z0-9][-_.a-zA-Z0-9]{0,61}[a-zA-Z0-9]))\.'
             r'([a-zA-Z]{2,13}|[a-zA-Z0-9-]{2,30}.[a-zA-Z]{2,3})$'
         )
-        valid_domain = True if domain.match(name) is not None else False
+        valid_domain = domain.match(name) is not None
         # see: https://en.wikipedia.org/wiki/Hostname#Restrictions_on_valid_host_names
         expr_hostname = r'^[a-zA-Z0-9-\.]{1,253}$'
-        valid_hostname = True if regex_match(expr_hostname, name) is not None else False
+        valid_hostname = regex_match(expr_hostname, name) is not None
         return all([valid_domain, valid_hostname])
 
     @staticmethod
