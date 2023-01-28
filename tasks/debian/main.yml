@@ -60,6 +60,9 @@
         proxmox_mail_gateway: "{{ pmg_conditionals_nginx | combine(PMG_CONFIG.nginx, recursive=true) }}"
   when: PMG_CONFIG.manage.webserver
   tags: webserver
+  args:
+    apply:
+      tags: webserver
 
 - name: Proxmox Mail GW | Debian | Adding repository-key
   ansible.builtin.apt_key:
