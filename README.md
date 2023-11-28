@@ -20,6 +20,10 @@ Role to deploy [Proxmox Mail Gateway](https://www.proxmox.com/en/proxmox-mail-ga
 ## Install
 
 ```bash
+# latest
+ansible-galaxy role install git+https://github.com/ansibleguy/sw_proxmox_mail_gw
+
+# from galaxy
 ansible-galaxy install ansibleguy.sw_proxmox_mail_gw
 
 # or to custom role-path
