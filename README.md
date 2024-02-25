@@ -98,6 +98,8 @@ See: [Prerequisites](https://github.com/ansibleguy/sw_proxmox_mail_gw/blob/stabl
 
 ## Usage
 
+You want a simple Ansible GUI? Check-out my [Ansible WebUI](https://github.com/ansibleguy/webui)
+
 ### Config
 
 Define the config as needed:
