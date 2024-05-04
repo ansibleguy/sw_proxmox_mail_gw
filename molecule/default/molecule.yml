@@ -10,6 +10,7 @@ _references:
         image: 'ansible0guy/molecule:debian-latest'
       tmpfs: ['/tmp', '/run', '/run/lock']
       privileged: true
+    command: '/sbin/init'
 
 dependency:
   name: galaxy
