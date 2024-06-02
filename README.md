@@ -35,68 +35,14 @@ ansible-galaxy install ansibleguy.sw_proxmox_mail_gw --roles-path ./roles
 ansible-galaxy install -r requirements.yml
 ```
 
+----
+
 ## Prerequisites
 
 See: [Prerequisites](https://github.com/ansibleguy/sw_proxmox_mail_gw/blob/stable/Prerequisites.md)
 
 
-## Functionality
-
-
-* **Package installation**
-  * Ansible dependencies (_minimal_)
-  * Systemd
-  * Proxmox Mail Gateway
-  * PMG dependencies
-    * postgreSQL
-    * Postfix
-  
-
-* **Configuration**
-  * default postgreSQL installation
-
-  * **Default opt-ins**:
-    * Nginx => using [THIS Role](https://github.com/ansibleguy/infra_nginx)
-
-  * **Default opt-outs**:
-    * Enterprise apt-repository (_[subscription needed](https://www.proxmox.com/en/proxmox-mail-gateway/pricing)_)
-
-
-## Info
-
-* **Warning:** **IF YOU ARE USING A DEDICATED VM FOR THIS SETUP**:
-
-  You should probably use the [ISO installation process](https://www.proxmox.com/en/downloads/category/proxmox-mail-gateway).
-
-  It might be better supported!
-
-
-* **Note:** this role currently only supports debian-based systems
-
-
-* **Note:** Most of the role's functionality can be opted in or out.
-
-  For all available options - see the default-config located in [the main defaults-file](https://github.com/ansibleguy/sw_proxmox_mail_gw/blob/latest/defaults/main/1_main.yml)!
-
-
-* **Warning:** Not every setting/variable you provide will be checked for validity. Bad config might break the role!
-
-
-* **Warning:** If you choose to install the nginx web server (_default_) and want to use the [built-in ACME certificate management](https://pmg.proxmox.com/pmg-docs/pmg-admin-guide.html#sysadmin_certificate_management) - you will have to configure 'nginx.plain_site' to 'false'.
-
-  As this 'ACME standalone integration' needs the port 80 to be not in use!
-
-
-* **Note:** Check out the [nice documentation](https://pmg.proxmox.com/pmg-docs/pmg-admin-guide.html#_features) provided by Proxmox!
-
-
-* **Warning:** Docker containers ARE NOT SUPPORTED.
-
-
-* **Info:** PMG's web interface default login is done via PAM/System users.
-
-  Normally, at first, via 'root'.
-
+----
 
 ## Usage
 
@@ -168,3 +114,63 @@ To debug errors - you can set the 'debug' variable at runtime:
 ```bash
 ansible-playbook -K -D -i inventory/hosts.yml playbook.yml -e debug=yes
 ```
+
+----
+
+## Functionality
+
+
+* **Package installation**
+  * Ansible dependencies (_minimal_)
+  * Systemd
+  * Proxmox Mail Gateway
+  * PMG dependencies
+    * postgreSQL
+    * Postfix
+  
+
+* **Configuration**
+  * default postgreSQL installation
+
+  * **Default opt-ins**:
+    * Nginx => using [THIS Role](https://github.com/ansibleguy/infra_nginx)
+
+  * **Default opt-outs**:
+    * Enterprise apt-repository (_[subscription needed](https://www.proxmox.com/en/proxmox-mail-gateway/pricing)_)
+
+----
+
+## Info
+
+* **Warning:** **IF YOU ARE USING A DEDICATED VM FOR THIS SETUP**:
+
+  You should probably use the [ISO installation process](https://www.proxmox.com/en/downloads/category/proxmox-mail-gateway).
+
+  It might be better supported!
+
+
+* **Note:** this role currently only supports debian-based systems
+
+
+* **Note:** Most of the role's functionality can be opted in or out.
+
+  For all available options - see the default-config located in [the main defaults-file](https://github.com/ansibleguy/sw_proxmox_mail_gw/blob/latest/defaults/main/1_main.yml)!
+
+
+* **Warning:** Not every setting/variable you provide will be checked for validity. Bad config might break the role!
+
+
+* **Warning:** If you choose to install the nginx web server (_default_) and want to use the [built-in ACME certificate management](https://pmg.proxmox.com/pmg-docs/pmg-admin-guide.html#sysadmin_certificate_management) - you will have to configure 'nginx.plain_site' to 'false'.
+
+  As this 'ACME standalone integration' needs the port 80 to be not in use!
+
+
+* **Note:** Check out the [nice documentation](https://pmg.proxmox.com/pmg-docs/pmg-admin-guide.html#_features) provided by Proxmox!
+
+
+* **Warning:** Docker containers ARE NOT SUPPORTED.
+
+
+* **Info:** PMG's web interface default login is done via PAM/System users.
+
+  Normally, at first, via 'root'.
