@@ -3,7 +3,7 @@
 galaxy_info:
   author: 'AnsibleGuy <guy@ansibleguy.net>'
   namespace: 'ansibleguy'
-  license: 'GPLv3'
+  license: 'MIT'
   issue_tracker_url: 'https://github.com/ansibleguy/sw_proxmox_mail_gw/issues'
   min_ansible_version: 2.9.0
   description: 'Ansible role to deploy Proxmox Mail Gateway on a linux server'
