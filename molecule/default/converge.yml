@@ -11,7 +11,7 @@
         aliases: ['alias.lan', '_']
         ip: '192.168.7.2'
         ssl:
-          mode: 'ca'
+          mode: 'snakeoil'
 
   roles:
     - ansibleguy.sw_proxmox_mail_gw
