@@ -4,17 +4,19 @@
 
 Role to deploy [Proxmox Mail Gateway](https://www.proxmox.com/en/proxmox-mail-gateway) on a linux server.
 
-<a href='https://ko-fi.com/ansible0guy' target='_blank'><img height='35' style='border:0px;height:46px;' src='https://az743702.vo.msecnd.net/cdn/kofi3.png?v=0' border='0' alt='Buy me a coffee' />
-
 [![Proxmox Incoming Processing](https://dl.ansibleguy.net/sw_proxmox_mail_gw/flow.png)](https://pmg.proxmox.com/pmg-docs/pmg-admin-guide.html)
 
 
-[![Molecule Test Status](https://badges.ansibleguy.net/sw_proxmox_mail_gw.molecule.svg)](https://github.com/ansibleguy/_meta_cicd/blob/latest/templates/usr/local/bin/cicd/molecule.sh.j2)
-[![YamlLint Test Status](https://badges.ansibleguy.net/sw_proxmox_mail_gw.yamllint.svg)](https://github.com/ansibleguy/_meta_cicd/blob/latest/templates/usr/local/bin/cicd/yamllint.sh.j2)
-[![PyLint Test Status](https://badges.ansibleguy.net/sw_proxmox_mail_gw.pylint.svg)](https://github.com/ansibleguy/_meta_cicd/blob/latest/templates/usr/local/bin/cicd/pylint.sh.j2)
-[![Ansible-Lint Test Status](https://badges.ansibleguy.net/sw_proxmox_mail_gw.ansiblelint.svg)](https://github.com/ansibleguy/_meta_cicd/blob/latest/templates/usr/local/bin/cicd/ansiblelint.sh.j2)
+[![Lint](https://github.com/ansibleguy/sw_proxmox_mail_gw/actions/workflows/lint.yml/badge.svg)](https://github.com/ansibleguy/sw_proxmox_mail_gw/actions/workflows/lint.yml)
 [![Ansible Galaxy](https://badges.ansibleguy.net/galaxy.badge.svg)](https://galaxy.ansible.com/ui/standalone/roles/ansibleguy/sw_proxmox_mail_gw)
 
+**Molecule Integration-Tests**:
+
+* Status: [![Molecule Test Status](https://badges.ansibleguy.net/sw_proxmox_mail_gw.molecule.svg)](https://github.com/ansibleguy/_meta_cicd/blob/latest/templates/usr/local/bin/cicd/molecule.sh.j2) |
+[![Functional-Tests](https://github.com/ansibleguy/sw_proxmox_mail_gw/actions/workflows/integration_test_result.yml/badge.svg)](https://github.com/ansibleguy/sw_proxmox_mail_gw/actions/workflows/integration_test_result.yml)
+* Logs: [API](https://ci.ansibleguy.net/api/job/ansible-test-molecule-sw_proxmox_mail_gw/logs?token=2b7bba30-9a37-4b57-be8a-99e23016ce70&lines=1000) | [Short](https://badges.ansibleguy.net/log/molecule_sw_proxmox_mail_gw_test_short.log) | [Full](https://badges.ansibleguy.net/log/molecule_sw_proxmox_mail_gw_test.log)
+
+Internal CI: [Tester Role](https://github.com/ansibleguy/_meta_cicd) | [Jobs API](https://github.com/O-X-L/github-self-hosted-jobs-systemd)
 
 **Tested:**
 * Debian 11
