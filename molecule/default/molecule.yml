@@ -2,16 +2,6 @@
 
 # todo: full testing using VMs => docker isn't working
 
-_references:
-  docker:
-    all: &docker_all
-      docker_host: 'tcp://molecule-docker.local:2375'
-      # docker_host: 'unix://var/run/docker.sock'  # localhost
-      image: 'ansible0guy/molecule:debian-latest'
-      tmpfs: ['/tmp', '/run', '/run/lock']
-      privileged: true
-      command: '/sbin/init'
-
 dependency:
   name: galaxy
 driver:
@@ -27,7 +17,12 @@ platforms:
       - name: 'test-ag-pmg'
         ipv4_address: '192.168.7.2'
     groups: [grp_targets]
-    <<: *docker_all
+    docker_host: 'tcp://molecule-docker.local:2375'
+    # docker_host: 'unix://var/run/docker.sock'  # localhost
+    image: 'ansible0guy/molecule:debian-latest'
+    tmpfs: [ '/tmp', '/run', '/run/lock' ]
+    privileged: true
+    command: '/sbin/init'
 
   #  - name: test-ag-pmg-tester
   #    networks:
@@ -45,7 +40,12 @@ platforms:
       - name: 'test-ag-pmg'
         ipv4_address: '192.168.7.3'
     groups: [grp_targets]
-    <<: *docker_all
+    docker_host: 'tcp://molecule-docker.local:2375'
+    # docker_host: 'unix://var/run/docker.sock'  # localhost
+    image: 'ansible0guy/molecule:debian-latest'
+    tmpfs: [ '/tmp', '/run', '/run/lock' ]
+    privileged: true
+    command: '/sbin/init'
 
 provisioner:
   name: ansible
