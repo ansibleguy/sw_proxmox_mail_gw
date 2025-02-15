@@ -20,6 +20,7 @@ Internal CI: [Tester Role](https://github.com/ansibleguy/_meta_cicd) | [Jobs API
 
 **Tested:**
 * Debian 11
+* Debian 12
 
 ----
 
