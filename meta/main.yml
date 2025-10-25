@@ -1,16 +1,18 @@
 ---
 
 galaxy_info:
-  author: 'AnsibleGuy <guy@ansibleguy.net>'
-  namespace: 'ansibleguy'
+  author: 'Rath Pascal <contact@oxl.at>'
+  namespace: 'oxlorg'
   license: 'MIT'
-  issue_tracker_url: 'https://github.com/ansibleguy/sw_proxmox_mail_gw/issues'
-  min_ansible_version: 2.9.0
+  issue_tracker_url: 'https://github.com/O-X-L/ansible-role-proxmox-mail-gw/issues'
+  min_ansible_version: '2.14'
   description: 'Ansible role to deploy Proxmox Mail Gateway on a linux server'
   platforms:
     - name: Debian
       versions:
         - bullseye
+        - bookworm
+        - trixies
   galaxy_tags:
     - 'proxmox'
     - 'mail'

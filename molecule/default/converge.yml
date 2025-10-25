@@ -5,7 +5,7 @@
   vars:
     no_prompts: true
     pmg:
-      fqdn: 'pmg1.test.ansibleguy.net'
+      fqdn: 'pmg1.test.oxl.at'
 
       nginx:
         aliases: ['alias.lan', '_']
@@ -14,7 +14,7 @@
           mode: 'snakeoil'
 
   roles:
-    - ansibleguy.sw_proxmox_mail_gw
+    - oxlorg.proxmox_mail_gw
 
 - name: Converge - no nginx
   hosts: test-ag-pmg-2
@@ -22,10 +22,10 @@
     no_prompts: true
     subscription: true
     pmg:
-      fqdn: 'pmg2.test.ansibleguy.net'
+      fqdn: 'pmg2.test.oxl.at'
 
       manage:
         webserver: false
 
   roles:
-    - ansibleguy.sw_proxmox_mail_gw
+    - oxlorg.proxmox_mail_gw

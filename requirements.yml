@@ -6,5 +6,8 @@ collections:
   - 'community.crypto'
 
 roles:
-  - src: 'ansibleguy.infra_certs'
-  - src: 'ansibleguy.infra_nginx'
+  - name: 'oxlorg.nginx'
+    src: 'git+https://github.com/O-X-L/ansible-role-nginx'
+
+  - name: 'oxlorg.certs'
+    src: 'git+https://github.com/O-X-L/ansible-role-certs'

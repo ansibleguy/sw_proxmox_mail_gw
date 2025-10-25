@@ -29,8 +29,8 @@ platforms:
   #      - name: 'test-ag-pmg'
   #        ipv4_address: '192.168.7.1'
   #    etc_hosts: {
-  #      pmg1.test.ansibleguy.net: '192.168.7.2',
-  #      pmg2.test.ansibleguy.net: '192.168.7.3',
+  #      pmg1.test.oxl.at: '192.168.7.2',
+  #      pmg2.test.oxl.at: '192.168.7.3',
   #    }
   #    groups: [grp_tester]
   #    <<: *docker_all

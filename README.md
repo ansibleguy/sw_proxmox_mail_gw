@@ -4,19 +4,19 @@
 
 Role to deploy [Proxmox Mail Gateway](https://www.proxmox.com/en/proxmox-mail-gateway) on a linux server.
 
-[![Proxmox Incoming Processing](https://dl.ansibleguy.net/sw_proxmox_mail_gw/flow.png)](https://pmg.proxmox.com/pmg-docs/pmg-admin-guide.html)
+[![Proxmox Incoming Processing](https://dl.oss.oxl.app/sw_proxmox_mail_gw/flow.png)](https://pmg.proxmox.com/pmg-docs/pmg-admin-guide.html)
 
 
-[![Lint](https://github.com/ansibleguy/sw_proxmox_mail_gw/actions/workflows/lint.yml/badge.svg)](https://github.com/ansibleguy/sw_proxmox_mail_gw/actions/workflows/lint.yml)
-[![Ansible Galaxy](https://badges.ansibleguy.net/galaxy.badge.svg)](https://galaxy.ansible.com/ui/standalone/roles/ansibleguy/sw_proxmox_mail_gw)
+[![Lint](https://github.com/O-X-L/ansible-role-proxmox-mail-gw/actions/workflows/lint.yml/badge.svg)](https://github.com/O-X-L/ansible-role-proxmox-mail-gw/actions/workflows/lint.yml)
+[![Ansible Galaxy](https://badges.oss.oxl.app/galaxy.badge.svg)](https://galaxy.ansible.com/ui/standalone/roles/oxlorg/proxmox_mail_gw)
 
 **Molecule Integration-Tests**:
 
-* Status: [![Molecule Test Status](https://badges.ansibleguy.net/sw_proxmox_mail_gw.molecule.svg)](https://github.com/ansibleguy/_meta_cicd/blob/latest/templates/usr/local/bin/cicd/molecule.sh.j2) |
-[![Functional-Tests](https://github.com/ansibleguy/sw_proxmox_mail_gw/actions/workflows/integration_test_result.yml/badge.svg)](https://github.com/ansibleguy/sw_proxmox_mail_gw/actions/workflows/integration_test_result.yml)
-* Logs: [API](https://ci.ansibleguy.net/api/job/ansible-test-molecule-sw_proxmox_mail_gw/logs?token=2b7bba30-9a37-4b57-be8a-99e23016ce70&lines=1000) | [Short](https://badges.ansibleguy.net/log/molecule_sw_proxmox_mail_gw_test_short.log) | [Full](https://badges.ansibleguy.net/log/molecule_sw_proxmox_mail_gw_test.log)
+* Status: [![Molecule Test Status](https://badges.oss.oxl.app/sw_proxmox_mail_gw.molecule.svg)](https://github.com/O-X-L/ansible-role-oxl-cicd/blob/latest/templates/usr/local/bin/cicd/molecule.sh.j2) |
+[![Functional-Tests](https://github.com/O-X-L/ansible-role-proxmox-mail-gw/actions/workflows/integration_test_result.yml/badge.svg)](https://github.com/O-X-L/ansible-role-proxmox-mail-gw/actions/workflows/integration_test_result.yml)
+* Logs: [API](https://ci.oss.oxl.app/api/job/ansible-test-molecule-sw_proxmox_mail_gw/logs?token=2b7bba30-9a37-4b57-be8a-99e23016ce70&lines=1000) | [Short](https://badges.oss.oxl.app/log/molecule_sw_proxmox_mail_gw_test_short.log) | [Full](https://badges.oss.oxl.app/log/molecule_sw_proxmox_mail_gw_test.log)
 
-Internal CI: [Tester Role](https://github.com/ansibleguy/_meta_cicd) | [Jobs API](https://github.com/O-X-L/github-self-hosted-jobs-systemd)
+Internal CI: [Tester Role](https://github.com/O-X-L/ansible-role-oxl-cicd) | [Jobs API](https://github.com/O-X-L/github-self-hosted-jobs-systemd)
 
 **Tested:**
 * Debian 11
@@ -28,13 +28,13 @@ Internal CI: [Tester Role](https://github.com/ansibleguy/_meta_cicd) | [Jobs API
 
 ```bash
 # latest
-ansible-galaxy role install git+https://github.com/ansibleguy/sw_proxmox_mail_gw
+ansible-galaxy role install git+https://github.com/O-X-L/ansible-role-proxmox-mail-gw
 
 # from galaxy
-ansible-galaxy install ansibleguy.sw_proxmox_mail_gw
+ansible-galaxy install oxlorg.proxmox_mail_gw
 
 # or to custom role-path
-ansible-galaxy install ansibleguy.sw_proxmox_mail_gw --roles-path ./roles
+ansible-galaxy install oxlorg.proxmox_mail_gw --roles-path ./roles
 
 # install dependencies
 ansible-galaxy install -r requirements.yml
@@ -44,7 +44,7 @@ ansible-galaxy install -r requirements.yml
 
 ## Prerequisites
 
-See: [Prerequisites](https://github.com/ansibleguy/sw_proxmox_mail_gw/blob/stable/Prerequisites.md)
+See: [Prerequisites](https://github.com/O-X-L/ansible-role-proxmox-mail-gw/blob/stable/Prerequisites.md)
 
 ----
 
@@ -62,7 +62,7 @@ See: [Prerequisites](https://github.com/ansibleguy/sw_proxmox_mail_gw/blob/stabl
 
 * You want a simple **Ansible GUI**?
 
-  Check-out this [Ansible WebUI](https://github.com/ansibleguy/webui)
+  Check-out this [Ansible WebUI](https://github.com/O-X-L/ansible-webui)
 
 
 ----
@@ -74,46 +74,46 @@ See: [Prerequisites](https://github.com/ansibleguy/sw_proxmox_mail_gw/blob/stabl
 Define the config as needed:
 ```yaml
 pmg:
-  fqdn: 'pmg.template.ansibleguy.net'  # valid, public dns-hostname of your server
+  fqdn: 'pmg.template.oxl.at'  # valid, public dns-hostname of your server
 
   manage:
     webserver: true  # set to false to disable nginx-component
 
-  nginx:  # configure the webserver settings => see: https://github.com/ansibleguy/infra_nginx
-    aliases: ['mail-gw.ansibleguy.net']  # additional domains to add to the certificate
+  nginx:  # configure the webserver settings => see: https://github.com/O-X-L/ansible-role-nginx
+    aliases: ['mail-gw.oxl.at']  # additional domains to add to the certificate
     ssl:
       mode: 'letsencrypt'  # or selfsigned/ca
       #  if you use 'selfsigned' or 'ca':
       #    cert:
       #      cn: 'Proxmox Mail Gateway'
       #      org: 'AnsibleGuy'
-      #      email: 'pmg@template.ansibleguy.net'
+      #      email: 'pmg@template.oxl.at'
     letsencrypt:
-      email: 'pmg@template.ansibleguy.net'
+      email: 'pmg@template.oxl.at'
 ```
 
 Bare minimum example:
 ```yaml
 pmg:
-  fqdn: 'pmg.template.ansibleguy.net'
+  fqdn: 'pmg.template.oxl.at'
 ```
 
 Example to use PMG's built-in ACME:
 ```yaml
 pmg:
-  fqdn: 'pmg.template.ansibleguy.net'
+  fqdn: 'pmg.template.oxl.at'
 
   nginx:
-    aliases: ['mail-gw.ansibleguy.net']
+    aliases: ['mail-gw.oxl.at']
     plain_site: false  # nginx will not bind to port 80
     letsencrypt:
-      email: 'pmg@template.ansibleguy.net'
+      email: 'pmg@template.oxl.at'
 ```
 
 Example - if you want to setup postgreSQL manually:
 ```yaml
 pmg:
-  fqdn: 'pmg.template.ansibleguy.net'
+  fqdn: 'pmg.template.oxl.at'
 
   manage:
     database: false
@@ -154,7 +154,7 @@ ansible-playbook -K -D -i inventory/hosts.yml playbook.yml -e debug=yes
   * default postgreSQL installation
 
   * **Default opt-ins**:
-    * Nginx => using [THIS Role](https://github.com/ansibleguy/infra_nginx)
+    * Nginx => using [THIS Role](https://github.com/O-X-L/ansible-role-nginx)
 
   * **Default opt-outs**:
     * Enterprise apt-repository (_[subscription needed](https://www.proxmox.com/en/proxmox-mail-gateway/pricing)_)
@@ -175,7 +175,7 @@ ansible-playbook -K -D -i inventory/hosts.yml playbook.yml -e debug=yes
 
 * **Note:** Most of the role's functionality can be opted in or out.
 
-  For all available options - see the default-config located in [the main defaults-file](https://github.com/ansibleguy/sw_proxmox_mail_gw/blob/latest/defaults/main/1_main.yml)!
+  For all available options - see the default-config located in [the main defaults-file](https://github.com/O-X-L/ansible-role-proxmox-mail-gw/blob/latest/defaults/main/1_main.yml)!
 
 
 * **Warning:** Not every setting/variable you provide will be checked for validity. Bad config might break the role!

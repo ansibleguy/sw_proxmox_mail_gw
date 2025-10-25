@@ -63,7 +63,7 @@ jobs:
       - name: Preparing for AnsibleLint
         run: |
           mkdir -p '/tmp/ansible_lint/roles/'
-          ln -s "${{ github.workspace }}" "/tmp/ansible_lint/roles/ansibleguy.${{ github.event.repository.name }}"
+          ln -s "${{ github.workspace }}" "/tmp/ansible_lint/roles/oxlorg.proxmox_mail_gw"
           ansible-galaxy role install -r requirements.yml -p /tmp/ansible_lint/roles
         shell: bash
 

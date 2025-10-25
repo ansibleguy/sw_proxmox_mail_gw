@@ -13,8 +13,8 @@
 #      register: page
 #      failed_when: "'Proxmox Mail Gateway' not in page.content"
 #      loop:
-#        - 'https://pmg1.test.ansibleguy.net'
-#        - 'https://pmg2.test.ansibleguy.net:8006'
+#        - 'https://pmg1.test.oxl.at'
+#        - 'https://pmg2.test.oxl.at:8006'
 
 - name: Verify - default
   hosts: test-ag-pmg-1

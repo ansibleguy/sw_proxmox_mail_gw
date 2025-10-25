@@ -7,4 +7,4 @@
   become: true
   gather_facts: yes
   roles:
-    - ansibleguy.sw_proxmox_mail_gw
+    - oxlorg.proxmox_mail_gw
